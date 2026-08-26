@@ -1,0 +1,237 @@
+{
+  "main": {
+    "id": "f80dd64ca3dcb19b",
+    "type": "split",
+    "children": [
+      {
+        "id": "2cee9ddb7162b700",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f7b66402ff0bc3b5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "提示词/SAP AP挖掘.md",
+                "mode": "source",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "SAP AP挖掘"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "6868b93a0e0338c9",
+    "type": "split",
+    "children": [
+      {
+        "id": "4387762d0bad0a59",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1615338cbeb081d6",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "f42ab172ac2e8172",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:#对于挖掘的结果做优化",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "d9f896bc51ea1634",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 385.5
+  },
+  "right": {
+    "id": "dcfa4564ecfec502",
+    "type": "split",
+    "children": [
+      {
+        "id": "7112602a837fc8ed",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a2fab03176f2738f",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "反向链接"
+            }
+          },
+          {
+            "id": "3a680a7ffd156859",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "出链"
+            }
+          },
+          {
+            "id": "198ecfbcdaa6f107",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "0489a0fd78f96af4",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "d36a28ed91b68b98",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "f7b66402ff0bc3b5",
+  "lastOpenFiles": [
+    "harness/claude code.md",
+    "提示词/SAP AP挖掘.md",
+    "harness",
+    "ontology/数据分层/tidb_iceberg_data_tiering_design.md",
+    "提示词",
+    "ontology/数据分层/tidb_30_day_retention_60_day_query_design.md",
+    "ontology/会议内容/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/04_物的退_日落决策规则与自动下架.png",
+    "ontology/会议内容/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/05_物的退_当前运作过程.png",
+    "ontology/会议内容/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/06_物的退_自我进化与日落退出.png",
+    "ontology/会议内容/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/03_配置策略报价器_周边系统交互数据流.png",
+    "ontology/会议内容/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/08_物的上市_TTM分析_兼容性到配置器.png",
+    "ontology/会议内容/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/07_物的上市_兼容性E2E与AI自动生成配置手册.png",
+    "ontology/会议内容/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/09_物的上市感知_上架及时率与目录价感知.png",
+    "ontology/会议内容/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片",
+    "ontology/会议内容/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片.zip",
+    "ontology/会议内容/ipd场景的讨论-20260818",
+    "ontology/会议内容/未命名文件夹",
+    "ontology/会议内容",
+    "ontology/未命名文件夹",
+    "ontology/TiDB/tidb_write_hotspot_explained.md",
+    "ontology/TiDB/tidb_ontology_sharding_and_partitioning_design.md",
+    "ontology/TiDB/tidb_nebulagraph_large_scale_object_link_projection_solution.md",
+    "ontology/FreeMarker_JavaParser_Spring_JPA_Controller_动态代码生成框架_最佳实践.md",
+    "ontology/Palantir/palantir_ontology_graph_relational_database_solution.md",
+    "ontology/Palantir/palantir_quiver_deep_dive.md",
+    "ontology/动态生成_Spring_JPA到Controller_模块化Runtime开发框架_行业最佳实践_最终版.md",
+    "ontology/Ontology Runtime/ontology_runtime_postgresql_scalability_architecture.md",
+    "ontology/Ontology Runtime/tidb_only_ontology_reasoning_complete_solution.md",
+    "ontology/drp_architecture_detailed.md",
+    "ontology/国资监管/穿透式监管平台技术架构图.png",
+    "ontology/国资监管/中国穿透式监管需求分析.md",
+    "ontology/国资监管/基于Ontology方法论实现国资穿透式监管.md",
+    "ontology/palantir_foundry_modules_overview.md",
+    "ontology/国资监管/DRP平台建设-ljf-updated.md",
+    "ontology/国资监管/DRP平台建设.md",
+    "ontology/国资监管/2 (1).md",
+    "ontology/palantir_ontology_manager_detailed_features.md",
+    "ontology/tidb_iceberg_data_tiering_design.md",
+    "ontology/数据分层",
+    "ontology/TiDB/tikv_continuous_growth_tiflash_replication.md",
+    "ontology/TiDB/tiflash_impact_on_tikv_transactions.md",
+    "ontology/TiDB",
+    "ontology/Ontology Runtime/ontology_object_storage_design.md",
+    "ontology/基于Ontology方法论实现国资穿透式监管.md",
+    "未命名.canvas"
+  ]
+}
