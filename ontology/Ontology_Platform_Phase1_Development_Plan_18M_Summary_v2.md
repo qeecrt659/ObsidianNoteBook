@@ -8,14 +8,14 @@
 
 - 不自研 Pipeline / ETL / ELT / Data Integration Platform。
 - 第三方 Pipeline 负责数据采集、清洗、转换、CDC、调度与数据质量，并最终将标准化数据写入 TiDB。
-- 不自研 Automation / Workflow Engine。
-- 外部 Automation Engine 负责任务调度、Trigger、Workflow、Retry、Approval 和流程编排。
+- 不自研 Automation / Workflow Engine，也不自研审批平台或审批流程引擎。
+- 外部 Automation Engine 负责任务调度、Trigger、Workflow、Retry 和流程编排；外部 Approval Platform 负责审批流程定义、审批任务、会签/条件审批、审批人规则和审批状态流转。
 - 暂不开发 Application Builder、完整 Developer Platform 产品化能力、独立 Operations Platform 产品、AIP / AI Platform。
 - 当前目标是优先完成企业级 Ontology Runtime Platform。
 
 第一阶段平台的核心目标：
 
-> 建立从 Platform Kernel / Security Foundation → Ontology Modeling → TiDB Mapping & Data Access → Object / Link / Query Runtime → Action / Edit → Function / Event / External Automation Integration 的完整闭环。
+> 建立从 Platform Kernel / Security Foundation → Ontology Modeling → TiDB Mapping & Data Access → Object / Link / Query Runtime → Action / Edit → Function / Event / External Automation / Approval Integration 的完整闭环。
 
 本计划使用两种不同的拆分维度：
 
@@ -54,7 +54,7 @@ TiDB
 
 ---
 
-## 2.2 外部 Automation Engine 负责
+## 2.2 外部 Automation / Approval Platform 负责
 
 ```text
 Schedule
@@ -62,15 +62,19 @@ Trigger
 Workflow
 Condition
 Retry
-Approval
-Human Task
 Process Orchestration
 Workflow State
+
+Approval Process Definition
+Approver Resolution
+Countersign / Sequential / Conditional Approval
+Human Task
+Approval State
 ```
 
-本平台不负责流程调度和 Workflow Runtime。
+本平台不负责流程调度、Workflow Runtime 或审批 Runtime。
 
-外部 Automation 通过：
+外部 Automation / Approval Platform 通过：
 
 ```text
 Event
@@ -80,6 +84,8 @@ ObjectSet API
 Function API
 +
 Action API
++
+Approval Request API / Approval Callback
 ```
 
 使用 Ontology Platform。
@@ -92,7 +98,7 @@ Action API
 
 | 编号  | 模块                                              | 主要开发内容                                                                                                                                                             | 优先级   |
 | --- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----- |
-| 01  | Resource & Identity / Control Plane             | UID/RID、Enrollment、Organization、Space、Portfolio、Project、Folder、Resource、Role、Permission、Marking、Revision、Workspace、ChangeSet、Branch、Proposal、Approval、Audit、Outbox | 当前阶段  |
+| 01  | Resource & Identity / Control Plane             | UID/RID、Enrollment、Organization、Space、Portfolio、Project、Folder、Resource、Role、Permission、Marking、Revision、Workspace、ChangeSet、Branch、Proposal、Approval Request/Status、Audit、Outbox | 当前阶段  |
 | 02  | Object Type & Property                          | Object Type、Property、Primary Key、API Name、类型系统、约束、状态、Schema Revision、Property Lifecycle                                                                            | 最高    |
 | 03  | TiDB Datasource & Ontology Mapping              | Datasource、Database/Table/Column Metadata、Object Type ↔ Table、Property ↔ Column、Primary Key Mapping                                                                | 最高    |
 | 04  | Object Runtime                                  | Object Instance、Object Identity、单对象/批量读取、Property Loading、Materialization、Pagination、Serialization、Cache、Runtime Backend Abstraction                                  | 最高    |
@@ -106,7 +112,7 @@ Action API
 | 12  | TiDB Data Access Runtime                        | Connection Pool、Credential、Schema Discovery、Mapping Runtime、SQL Compiler、安全 SQL、Timeout、Query Execution                                                            | 最高    |
 | 13  | Ontology Dependency & Impact Analysis           | 从首个 Revision 开始记录依赖边，逐步实现 TiDB Column → Property → Object/Link → Function/Action 的上游/下游与变更影响分析                                                            | 重要    |
 | 14  | Data Security Runtime                           | 从首个 Runtime 开始落实 Object/Row/Property 级权限、Organization、Marking、Security Filter、Query Rewrite、Security Pushdown                                                     | 企业级必需 |
-| 15  | External Automation Integration & Event Gateway | 从早期稳定 API/Event Contract 开始，逐步实现 Object Event、Subscription、Webhook/Event Bus、Service Principal、Idempotency、Callback                                            | 重要    |
+| 15  | External Automation / Approval Integration & Event Gateway | 从早期稳定 API/Event/Approval Contract 开始，逐步实现 Object Event、Subscription、Webhook/Event Bus、外部审批请求与回调、Service Principal、Idempotency、Callback | 重要    |
 
 ---
 
@@ -131,7 +137,7 @@ Action API
 谁可以修改
 谁可以执行 Action
 修改如何版本化
-如何审批
+如何提交外部审批并受审批结果约束
 如何审计
 数据级访问如何控制
 ```
@@ -229,7 +235,7 @@ TiDB
 ```text
 08 Action Engine
 09 Function Platform
-15 External Automation Integration
+15 External Automation / Approval Integration
 ```
 
 负责向外部系统提供真正可执行的业务能力：
@@ -244,7 +250,7 @@ Publish Object Event
 
 对外修改必须优先通过 Action API；Edit Runtime 是 Action Engine 使用的内部事务执行能力，不单独暴露可绕过权限、Validation 和 Audit 的通用写接口。
 
-外部 Automation 负责：
+外部 Automation / Approval Platform 负责：
 
 ```text
 什么时候执行
@@ -262,7 +268,7 @@ Publish Object Event
 
 ## 5.1 01 — Resource & Identity / Control Plane
 
-负责整个平台最底层的资源、身份、目录、权限、版本、分支、审批和审计治理，为后续所有 Ontology 和 Runtime 能力提供统一的 Control Plane 基础。
+负责整个平台最底层的资源、身份、目录、权限、版本、分支、Proposal、外部审批状态映射和审计治理，为后续所有 Ontology 和 Runtime 能力提供统一的 Control Plane 基础。本模块不实现审批流程、审批任务或审批人规则。
 
 ## 5.2 02 — Object Type & Property
 
@@ -324,6 +330,8 @@ Graph Projection 必须可由 TiDB 中的 Object / Link Fact 重新构建，不�
 
 负责定义并执行面向业务对象的业务动作，使 Ontology 从“描述业务”扩展为“执行和改变业务状态”。Action API 是平台对用户和外部系统暴露的主要写入口，内部调用 Edit Runtime 完成事务修改。
 
+需要人工审批的 Action 不在 Action Engine 内嵌审批节点或审批状态机。Action Engine 只生成绑定 Action Request、参数摘要和目标对象版本的 External Approval Request；收到模块 15 验证通过的 Approved 终态后，重新执行权限、Submission Criteria 和版本检查，再以同一 Idempotency Key 提交 Edit Transaction。Rejected、Cancelled、Expired、伪造或旧版本回调不得执行 Action。
+
 ## 5.9 09 — Function Platform
 
 负责承载可复用的业务计算和复杂业务逻辑，为 Action、外部 Automation 以及其他 Runtime 能力提供统一函数执行能力。
@@ -354,13 +362,13 @@ Graph Projection 必须可由 TiDB 中的 Object / Link Fact 重新构建，不�
 
 本模块是贯穿所有交付阶段的横切能力，不作为第 14～17 个月才开始的独立尾部阶段。
 
-## 5.15 15 — External Automation Integration & Event Gateway
+## 5.15 15 — External Automation / Approval Integration & Event Gateway
 
-负责把 Ontology Platform 与外部 Automation / Workflow Engine 连接起来，通过事件、ObjectSet、Function 和 Action 接口对外提供可编排的业务能力。
+负责把 Ontology Platform 与外部 Automation / Workflow Engine、Approval Platform 连接起来，通过事件、ObjectSet、Function、Action、Approval Request 和 Callback 接口对外提供可编排、可审批的业务能力。
 
-外部 Automation Engine 负责调度、流程、重试和审批，本平台只负责提供标准业务能力和事件接口。
+外部 Automation Engine 负责调度、流程和业务重试；外部 Approval Platform 负责审批模板、审批人、会签/条件审批、Human Task 和审批状态机。本平台仅负责为 Ontology Proposal 或 Action Request 发起/撤销审批请求、保存外部流程实例引用、接收验签回调、幂等更新审批镜像状态、执行 Publish / Action Execute Gate、对账和审计，不开发审批平台。
 
-API Contract、Event Envelope、Service Principal 和 Idempotency 需要在只读 Vertical Slice 与 Action Runtime 阶段提前稳定；最后阶段只完成适配、联调和生产硬化。
+API Contract、Event Envelope、Approval Contract、Service Principal 和 Idempotency 需要在 Stage 1 与 Action Runtime 阶段提前稳定；最后阶段只完成适配、联调和生产硬化。
 
 ---
 
@@ -376,6 +384,8 @@ Application Builder
 独立 Catalog 产品扩展
 
 独立 Operations Platform 产品
+
+审批平台 / 审批流程引擎
 
 AIP / AI Platform
 
@@ -415,11 +425,11 @@ Runtime Monitoring
 
 | 交付阶段 | 主要内容 | 建议周期 | 核心目标 |
 |---|---|---|---|
-| Stage 1 | Complete Control Plane V1 & Modeling Foundation | 第 1～4 个月 | 完整交付 Control Plane V1，包括 Portfolio、复杂 Folder、完整 Workspace、Branch/Proposal/Approval，以及 Object/Property/Value Type 基础 |
+| Stage 1 | Complete Control Plane V1 & Modeling Foundation | 第 1～4 个月 | 完整交付 Control Plane V1，包括 Portfolio、复杂 Folder、完整 Workspace、Branch/Proposal，以及外部审批请求、回调和发布门禁 |
 | Stage 2 | Secure Read-only Vertical Slice | 第 3～8 个月 | 完成 TiDB Mapping、Object/Link/Query Runtime 和读取安全，实现首个端到端只读业务域 |
-| Stage 3 | Operational Ontology | 第 7～11 个月 | 合并交付 Edit Runtime 与 Action Engine，实现事务写入、并发控制、审计和事件 Outbox |
-| Stage 4 | Programmability & Integration | 第 10～14 个月 | 建立精简 Function Runtime、Interface、稳定 API/Event Contract 和外部 Automation 集成 |
-| Stage 5 | Enterprise Governance & Hardening | 第 12～16 个月 | 强化 Control Plane 的规模、冲突合并、复杂审批、权限/Marking、审计合规和运维能力，并完成 Dependency/Impact、HA 与按需 Graph Projection |
+| Stage 3 | Operational Ontology | 第 7～11 个月 | 合并交付 Edit Runtime 与 Action Engine，实现事务写入、审批门禁、并发控制、审计和事件 Outbox |
+| Stage 4 | Programmability & Integration | 第 10～14 个月 | 建立精简 Function Runtime、Interface、稳定 API/Event Contract、外部 Automation 集成，并对 Approval Adapter 做生产硬化 |
+| Stage 5 | Enterprise Governance & Hardening | 第 12～16 个月 | 强化 Control Plane 的规模、冲突合并、外部审批集成、权限/Marking、审计合规和运维能力，并完成 Dependency/Impact、HA 与按需 Graph Projection |
 | Stage 6 | Pilot & General Availability | 第 16～18 个月 | 以 1～2 个真实业务域完成生产试点、迁移、压测、安全测试、故障演练和正式发布 |
 
 ## 7.1 Stage 1 — Complete Control Plane V1 & Modeling Foundation
@@ -432,6 +442,7 @@ Runtime Monitoring
 11 Base Type / Value Type / Property Constraint
 12 TiDB Connection / Credential / Schema Discovery 骨架
 14 Identity Context / Policy Model
+15 External Approval Request / Callback Contract 与首个 Adapter 闭环
 ```
 
 Stage 1 不采用“只实现最小资源模型、其余能力后移”的方式。Control Plane 是后续所有 Ontology Resource、协作、权限、版本和发布流程的共同底座，因此 01 模块必须在 Stage 1 形成完整可用的 V1 闭环。
@@ -476,7 +487,7 @@ Workspace
 ├── Branch
 ├── Validation Result
 ├── Proposal / Review / Comment
-├── Approval / Reject / Withdraw
+├── External Approval Request / Status / Callback
 └── Merge / Publish / Archive
 ```
 
@@ -486,8 +497,11 @@ Stage 1 的 Workspace 不是简单 Draft 表，而是完整的隔离协作空间
 - 基于已发布 Revision 创建工作版本；
 - 一个 ChangeSet 原子包含多个 Ontology Resource 变更；
 - Branch 创建、保存、比较、提交 Proposal 和关闭；
-- Proposal Review、Comment、Approval、Reject、Withdraw；
-- 发布前 Validation、Permission Check、Dependency Check；
+- Proposal Review、Comment、提交/撤销外部审批请求、审批状态同步；
+- 本地 Review / Comment 仅用于协作和问题修订，不产生 Approved / Rejected 审批结论；
+- 发布前 Validation、Permission Check、Dependency Check、External Approval Result Check；
+- 外部审批回调验签、时间戳/Nonce 防重放、幂等、乱序处理、流程实例与 Revision 绑定；
+- 只有当前 Proposal 对应的有效外部审批结果为 Approved 时才允许 Publish；Rejected、Cancelled、Expired 或旧 Revision 的回调不得放行；
 - 发布成功后的不可变 Revision、版本引用和变更摘要；
 - 发布失败不污染 Main / Published Revision；
 - 并发修改检测和基础冲突提示。
@@ -499,21 +513,21 @@ Role / Permission / Resource Policy
 Organization / Space / Portfolio / Project / Folder 权限继承
 Resource Protection
 基础 Marking 与访问要求
-Proposal / Publish Approval Policy
+External Approval Mapping / Publish Gate
 完整 Audit Event
 Transactional Outbox
 ```
 
-Stage 1 必须确保所有资源创建、移动、修改、审批、发布、归档和权限变更都产生统一 Audit Event；需要对外传播的变更通过 Transactional Outbox 可靠发布。
+Stage 1 必须确保所有资源创建、移动、修改、审批请求、审批回调、状态变化、发布、归档和权限变更都产生统一 Audit Event；需要对外传播的变更通过 Transactional Outbox 可靠发布。
 
 Stage 1 与 Stage 5 的边界是：
 
-- **Stage 1 完成功能闭环**：上述资源、Workspace、Branch、Proposal、Approval、Permission、Audit 和 Outbox 均可被真实使用。
-- **Stage 5 完成企业级强化**：针对大规模资源树、复杂组织策略、冲突合并、合规留存、批量治理和灾备进行扩展与硬化，而不是补做 Stage 1 缺失功能。
+- **Stage 1 完成功能闭环**：上述资源、Workspace、Branch、Proposal、External Approval Integration、Permission、Audit 和 Outbox 均可被真实使用；审批流程本身由外部平台运行。
+- **Stage 5 完成企业级强化**：针对大规模资源树、外部审批对账、复杂组织策略、冲突合并、合规留存、批量治理和灾备进行扩展与硬化，而不是补做 Stage 1 缺失功能或自研审批引擎。
 
 阶段退出条件：
 
-> 用户可以在 Organization → Space → Portfolio → Project → 多级 Folder 中管理资源，在完整 Workspace 中通过 Branch → ChangeSet → Proposal → Approval → Publish 流程发布 Object Type / Property / Value Type；全过程受权限和 Marking 控制，具备 Audit、Outbox、失败回滚和已发布 Revision 隔离，并能够安全配置一个 TiDB 数据源。
+> 用户可以在 Organization → Space → Portfolio → Project → 多级 Folder 中管理资源，在完整 Workspace 中通过 Branch → ChangeSet → Proposal → External Approval Request → Approval Callback → Publish 流程发布 Object Type / Property / Value Type；审批由外部平台完成，本平台仅在验证有效 Approved 结果后放行发布。全过程受权限和 Marking 控制，具备 Audit、Outbox、失败回滚和已发布 Revision 隔离，并能够安全配置一个 TiDB 数据源。
 
 ## 7.2 Stage 2 — Secure Read-only Vertical Slice
 
@@ -546,13 +560,14 @@ Link Create / Delete
 Optimistic Concurrency
 Idempotency
 Transaction / Outbox / Audit
+External Approval Gate for Action Request
 ```
 
-Action API 是外部统一写入口；Edit Runtime 是内部事务执行层。Action 必须统一执行参数校验、Submission Criteria、权限校验、版本一致性检查、Side Effect 和 Audit。
+Action API 是外部统一写入口；Edit Runtime 是内部事务执行层。Action 必须统一执行参数校验、Submission Criteria、权限校验、版本一致性检查、Side Effect 和 Audit。需要审批的 Action 通过 External Approval Request / Callback 完成门禁，本平台不运行审批流程。
 
 阶段退出条件：
 
-> 外部调用方能够通过幂等 Action 安全修改 Object / Link；重复提交、并发冲突、部分失败和 Side Effect 失败均有明确处理与审计记录。
+> 外部调用方能够通过幂等 Action 安全修改 Object / Link；需要审批的 Action 只有在收到与当前 Action Request 和对象版本绑定的有效外部 Approved 结果后才执行。重复提交、重复/乱序审批回调、并发冲突、部分失败和 Side Effect 失败均有明确处理与审计记录。
 
 ## 7.4 Stage 4 — Programmability & Integration
 
@@ -561,7 +576,7 @@ Action API 是外部统一写入口；Edit Runtime 是内部事务执行层。Ac
 ```text
 09 Function Registry / Contract / Version / Execution
 10 Interface & Ontology Abstraction
-15 Service Principal / API / Event / Webhook
+15 Service Principal / API / Event / Webhook / Approval Adapter Hardening
 Function-backed Action
 ```
 
@@ -569,7 +584,7 @@ Function Platform 首期优先复用现有容器或 Kubernetes 执行底座，�
 
 阶段退出条件：
 
-> 外部 Automation Engine 可以使用 Service Principal 调用 ObjectSet、Action 和 Function，并通过稳定 Event Contract 接收可重试、可去重的对象事件。
+> 外部 Automation Engine 可以使用 Service Principal 调用 ObjectSet、Action 和 Function，并通过稳定 Event Contract 接收可重试、可去重的对象事件；外部 Approval Platform 可以通过稳定的请求/回调契约驱动 Ontology Publish Gate 和 Action Execute Gate。
 
 ## 7.5 Stage 5 — Enterprise Governance & Hardening
 
@@ -587,7 +602,7 @@ HA / Backup / Restore / Upgrade / Rollback
 
 ### 7.5.1 01 Control Plane Enterprise Hardening
 
-Stage 5 不再首次建设 Portfolio、Folder、Workspace、Branch、Proposal 或 Approval。这些能力已经在 Stage 1 完成功能闭环。本阶段针对真实业务运行后的规模、合规和复杂协作要求进行强化。
+Stage 5 不再首次建设 Portfolio、Folder、Workspace、Branch、Proposal 或外部审批对接。这些能力已经在 Stage 1 完成功能闭环。本阶段针对真实业务运行后的规模、合规和复杂协作要求进行强化；审批流程、审批任务和审批规则仍由外部 Approval Platform 提供。
 
 资源层级与规模强化：
 
@@ -612,16 +627,17 @@ Ontology Resource 级冲突检测
 大 ChangeSet 的分批校验和原子发布
 ```
 
-Approval 与治理策略强化：
+外部审批集成与发布治理强化：
 
 ```text
-按 Resource Type / Space / Marking 配置审批策略
-必选 Reviewer / Reviewer Group
-多人会签、任一通过、顺序审批和条件审批
-Separation of Duties（提交者不能审批自己的变更）
-高风险 Breaking Change 的升级审批
-紧急发布与事后审计流程
-Policy Versioning 和策略变更影响分析
+Resource Type / Action Type / Space / Marking → 外部审批流程模板映射
+Approval Request 与 Ontology Revision / Proposal 或 Action Request / Object Version 的不可变绑定
+Requested / InReview / Approved / Rejected / Cancelled / Expired 镜像状态
+Callback Signature / Nonce / Timestamp / Idempotency / Out-of-order Protection
+外部 Process Instance / Task / Approver / Decision / Decision Time 证据归档
+审批超时、丢失回调、状态不一致的主动对账、告警和人工修复
+高风险 Breaking Change、紧急发布和职责分离规则交由外部审批平台执行
+Publish / Execute Gate 只接受当前 Revision 或 Action Request 的有效终态，禁止管理员直接篡改审批结果
 ```
 
 Permission 与 Marking 强化：
@@ -631,7 +647,7 @@ Permission 与 Marking 强化：
 Portfolio / Project / Folder / Resource 权限继承与覆盖
 Permission Explain / Check Access
 大规模 Group Membership 变化后的权限重算
-Marking 传播、组合、冲突和移除审批
+Marking 传播、组合、冲突，以及需要审批时的外部门禁
 Service Principal 生命周期、密钥轮换和最小权限
 缓存中的权限版本隔离与即时失效
 ```
@@ -650,7 +666,7 @@ Schema Migration / Online Upgrade / Rollback
 
 Stage 5 的 Control Plane 退出条件：
 
-> Stage 1 的全部 Control Plane 功能在目标资源规模、并发和组织复杂度下稳定运行；权限解释、冲突解决、复杂审批、批量治理、审计留存、备份恢复与升级回滚均通过验收。
+> Stage 1 的全部 Control Plane 功能在目标资源规模、并发和组织复杂度下稳定运行；权限解释、冲突解决、外部审批对账与 Publish / Execute Gate、批量治理、审计留存、备份恢复与升级回滚均通过验收，平台内部不存在自研审批流程引擎。
 
 Graph Database 是否进入本阶段，由 Stage 2～3 的真实查询基准决定。只有高频复杂多跳、路径、环路或图算法场景无法达到目标 SLO 时，才引入独立 Graph Runtime。
 
@@ -700,7 +716,7 @@ Lane C — Operations & Integration
 API / Event Contract Skeleton
     → Internal Edit Runtime / Action Engine
     → Function Runtime / Event Gateway
-    → External Automation Integration
+    → External Automation / Approval Integration
 
 Cross-cutting
 Identity / Security / Audit / Observability / Test Automation
@@ -737,9 +753,9 @@ Function-backed Action / External Automation
 
 | 研发线 | 人数 | 主要责任 |
 |---|---:|---|
-| Metadata & Governance | 4 → 3 | Control Plane、复杂资源树、Workspace/Branch/Proposal/Approval、Ontology Modeling、Revision、Dependency；至少 1 人负责管理 UI / Full-stack |
+| Metadata & Governance | 4 → 3 | Control Plane、复杂资源树、Workspace/Branch/Proposal、外部审批状态映射与发布门禁、Ontology Modeling、Revision、Dependency；至少 1 人负责管理 UI / Full-stack |
 | Data & Runtime | 3 → 4 | TiDB Access、Mapping、Object/Link/Query Runtime、性能和可选 Graph Projection |
-| Operations & Integration | 2 | Edit、Action、Function、Event、External Automation |
+| Operations & Integration | 2 | Edit、Action、Function、Event、External Automation / Approval Platform Adapter |
 | Platform Engineering | 1 | CI/CD、测试基础设施、部署、可观测性、压测、备份恢复和故障演练 |
 
 Data Security 由各研发线共同负责：Metadata 负责 Policy Model，Runtime 负责读取强制执行，Operations 负责 Action / Function 执行权限，Platform Engineering 负责安全测试与审计证据。
@@ -806,9 +822,9 @@ Audit / Outbox / Event
 
 ---
 
-# 11. 第三关键里程碑：External Automation Integration（目标 M14）
+# 11. 第三关键里程碑：External Automation / Approval Integration（目标 M14）
 
-第三个关键里程碑是完成与外部 Automation Engine 的集成：
+第三个关键里程碑是完成与外部 Automation Engine 和 Approval Platform 的生产级集成：
 
 ```text
 External Automation
@@ -818,11 +834,19 @@ Service Principal / Stable API Contract
 ObjectSet / Function / Action
         ↓
 Event / Webhook / Callback
+
+External Approval Platform
+        ↕
+Approval Request / Cancel / Status Query / Signed Callback
+        ↕
+Proposal / Revision / Publish Gate
+Action Request / Object Version / Execute Gate
+Audit / Reconciliation
 ```
 
 目标：
 
-> 外部调度与流程平台可以安全地使用 Ontology Platform 提供的业务能力，而无需直接访问 TiDB 或绕过 Ontology。
+> 外部调度与流程平台可以安全地使用 Ontology Platform 提供的业务能力；外部审批平台可以完成审批并通过受信回调控制 Ontology 发布，二者都无需直接访问 TiDB 或绕过 Ontology。
 
 第四个发布门槛为 M18 General Availability：至少两个真实业务流程完成生产或准生产验证，并通过容量、安全、灾备、升级和回滚验收。
 
@@ -868,11 +892,12 @@ Event / Webhook / Callback
                     Audit / Outbox / Event
                             │
 ══════════════════════════════════════════════════════════
-                  API / SDK / Event Gateway
+             API / SDK / Event / Approval Gateway
 ══════════════════════════════════════════════════════════
-                            │
-                            ▼
-                External Automation Engine
+                  ┌─────────┴─────────┐
+                  ▼                   ▼
+      External Automation     External Approval
+             Engine               Platform
 
 Optional Projection（仅在基准证明需要时）：
 
@@ -941,7 +966,7 @@ Interface
 Value Type
 Dependency & Impact
 Data Security
-External Automation Integration
+External Automation / Approval Integration
 Optional Graph Projection
 ```
 
@@ -950,6 +975,7 @@ Optional Graph Projection
 ```text
 Data Pipeline
 Workflow / Automation Runtime
+Approval Platform / Approval Workflow Runtime
 Application Builder
 AIP / AI
 Agent
@@ -969,12 +995,13 @@ LLM
 首期必须限制为：
 
 ```text
-完整 Control Plane V1：Portfolio / Complex Folder / Workspace / Branch / Proposal / Approval
+完整 Control Plane V1：Portfolio / Complex Folder / Workspace / Branch / Proposal / External Approval Integration
 1 个企业 IdP / OIDC 集成
 1 种主要业务数据源：TiDB
 1～2 个真实业务域
 1 套统一 Action 事务模型
 1 套外部 Automation 集成协议
+1 套外部 Approval Platform 请求、回调、对账与发布门禁协议
 Function 复用现有容器 / Kubernetes 执行底座
 Graph Database 按基准测试结果决定
 必要的管理 UI、REST API 和基础 SDK
@@ -1046,7 +1073,7 @@ Graph Database 按基准测试结果决定
 
 14 — Data Security Runtime Specification
 
-15 — External Automation Integration & Event Gateway Specification
+15 — External Automation / Approval Integration & Event Gateway Specification
 ```
 
 每份 Specification 必须包含：Scope、Non-goals、API Contract、Data Model、Security、Failure Modes、Observability、Migration、Test Plan、Performance Budget 和阶段验收标准。
@@ -1061,7 +1088,7 @@ Graph Database 按基准测试结果决定
 |---|---|
 | Functional | 阶段定义的 Vertical Slice 在真实或准真实数据上端到端运行 |
 | Unit / Component Test | 核心领域规则、Query IR、SQL Compiler、Policy 和 Validation 分支具备自动化测试 |
-| Integration Test | PostgreSQL、TiDB、Identity Provider、Event / Webhook 等真实集成路径具备测试环境覆盖 |
+| Integration Test | PostgreSQL、TiDB、Identity Provider、External Approval Platform、Event / Webhook 等真实集成路径具备测试环境覆盖 |
 | Security Test | 默认拒绝、越权读取、属性泄露、Action 越权、Service Principal 和缓存隔离测试通过 |
 | Concurrency Test | Revision、Action、Optimistic Concurrency、Idempotency 和 Outbox 的竞争条件测试通过 |
 | Performance Test | 明确数据规模、并发、P95/P99 延迟、吞吐、超时和资源预算，并形成可重复基准 |
@@ -1078,7 +1105,8 @@ M4 Complete Control Plane V1 & Modeling Foundation
 ├── Portfolio / Project / 多级 Folder 创建、移动、归档与恢复
 ├── Folder 循环引用、越权移动和被依赖资源删除阻断
 ├── Workspace 成员、角色、状态与隔离
-├── Branch / ChangeSet / Proposal / Approval / Publish 全流程
+├── Branch / ChangeSet / Proposal / External Approval Request / Callback / Publish 全流程
+├── 审批回调验签、幂等、防重放、乱序、旧 Revision 和伪造 Approved 拒绝测试
 ├── 并发修改、发布失败回滚和 Published Revision 隔离
 ├── Permission / Marking 默认拒绝与继承
 ├── Audit Event 完整性和 Transactional Outbox 重放
@@ -1094,6 +1122,7 @@ M8 Read-only Vertical Slice
 
 M11 Operational Ontology
 ├── Action Validation / Permission
+├── Approval-gated Action 的 Approved / Rejected / 重复回调与对象版本变化
 ├── Optimistic Concurrency Conflict
 ├── Duplicate Submission / Idempotency
 ├── Transaction Rollback
@@ -1104,6 +1133,7 @@ M14 Integration
 ├── API Contract Compatibility
 ├── Event Duplicate / Out-of-order / Retry
 ├── Function Timeout / Isolation
+├── External Approval Timeout / Reconciliation / Fail-closed
 └── External Automation End-to-End
 
 M18 General Availability
@@ -1130,6 +1160,7 @@ ADR-05：Action / Edit Transaction / Outbox 一致性模型
 ADR-06：外部 Pipeline 管理字段与 Ontology Edit 管理字段的写入边界
 ADR-07：Function 执行隔离、版本和权限模型
 ADR-08：Event Envelope、Idempotency Key 和 Delivery Semantics
+ADR-09：外部审批请求、Revision / Action Request 绑定、回调信任、状态对账与 Publish / Execute Gate
 ```
 
 ## 16.2 主要风险
@@ -1141,9 +1172,10 @@ ADR-08：Event Envelope、Idempotency Key 和 Delivery Semantics
 | TiDB 与 Graph 双运行时过早并存 | 一致性、CDC、运维和故障恢复成本失控 | TiDB 默认执行；Graph 由业务需求和性能基准触发 |
 | Edit 与 Action 双写入口 | 权限绕过、语义不一致和审计缺失 | Action 对外、Edit 对内，统一事务与审计链 |
 | Function Platform 过度建设 | 消耗 Runtime 主线资源 | 复用现有执行底座，只开发 Ontology Contract、权限和版本管理 |
-| 最后两个月才做集成 | API 不稳定，Automation 无法按期联调 | Stage 2 固化只读 API，Stage 3 固化 Action/Event Contract |
+| 最后两个月才做集成 | API 不稳定，Automation / Approval Platform 无法按期联调 | Stage 1 固化 Approval Contract，Stage 2 固化只读 API，Stage 3 固化 Action/Event Contract |
 | 缺少真实业务域 | 模块完成但无法证明产品价值 | 从 Stage 1 选定试点域，所有里程碑围绕同一 Vertical Slice 演进 |
 | 缺少专职质量和平台能力 | 测试、发布、灾备被持续延期 | 固定 1 人负责 Platform Engineering，各研发线共同承担自动化测试 |
+| 外部 Approval Platform 不可用或状态不一致 | Proposal 无法发布、Action Request 无法执行，或错误审批结果绕过门禁 | Outbox 可靠发起、签名回调、幂等与乱序保护、定时对账、Fail-closed、告警和人工修复；不在本平台降级为自研审批 |
 
 ---
 
@@ -1158,6 +1190,7 @@ ADR-08：Event Envelope、Idempotency Key 和 Delivery Semantics
 可以通过 Action 安全修改 Object / Link 并完整审计
 可以运行受版本和权限控制的 Function
 可以通过 API / Event 与外部 Automation Engine 集成
+可以通过 Approval Request / Callback 与外部 Approval Platform 集成，并仅在有效审批结果下发布 Ontology 或执行需要审批的 Action
 可以分析核心资源依赖和 Breaking Change 影响
 可以执行对象级、行级和属性级访问控制
 可以在目标规模下达到约定 SLO

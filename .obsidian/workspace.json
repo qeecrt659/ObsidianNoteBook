@@ -83,7 +83,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 469.5468559265137
+    "width": 268.7460746765137
   },
   "right": {
     "id": "dcfa4564ecfec502",
@@ -187,6 +187,8 @@
   },
   "active": "f712b5455b286610",
   "lastOpenFiles": [
+    "ontology/AIP_Logic_Studio_Complete_Spec_Optimized_Architecture.md",
+    "ontology/Ontology_Platform_Phase1_Development_Plan_18M_Summary_v2.md",
     "ontology/Palantir研究/palantir_ticket_resolve_action_constraint_mapping.md",
     "ontology/Palantir研究/palantir_ontology_15_modules_gap_analysis.md",
     "ontology/Palantir研究/palantir_space_project_ontology_object_type.md",
@@ -194,7 +196,6 @@
     "ontology/Palantir研究/palantir_7_domains_81_systems_discovery_architecture.md",
     "ontology/Palantir研究/palantir_7_domains_81_systems_discovery_architecture__CAGxrYOU.md",
     "ontology/Palantir研究/palantir_quiver_deep_dive.md",
-    "ontology/Ontology_Platform_Phase1_Development_Plan_18M_Summary_v2.md",
     "ontology/AIP_Logic_Studio_开发功能清单与开发计划.md",
     "ontology/AIP_Logic_Studio_Complete_Product_Architecture_and_Function_Spec.md",
     "ontology/~$AIP_Logic_Studio_开发计划_18人_52周.xlsx",
@@ -202,7 +203,6 @@
     "ontology/~$AIP_Logic_Studio_开发计划_相对周期与人员.xlsx",
     "ontology/AIP_Logic_Studio_开发计划_相对周期与人员.xlsx",
     "ontology/AIP_Logic_Studio_开发功能清单与开发计划_删除第34章版.md",
-    "ontology/AIP_Logic_Studio_Complete_Spec_Optimized_Architecture.md",
     "ontology/AI_Logic_Studio_Architecture_and_Development_Guide.md",
     "ontology/AI_Logic_Studio_董事长汇报.md",
     "提示词/合作开发.md",
