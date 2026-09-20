@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "2cee9ddb7162b700",
+        "id": "3b4db3594bd42331",
         "type": "tabs",
         "children": [
           {
-            "id": "f7b66402ff0bc3b5",
+            "id": "f712b5455b286610",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "提示词/SAP AP挖掘.md",
+                "file": "ontology/Ontology_Platform_Phase1_Development_Plan_18M_Summary_v2.md",
                 "mode": "source",
-                "source": true
+                "source": false
               },
               "icon": "lucide-file",
-              "title": "SAP AP挖掘"
+              "title": "Ontology_Platform_Phase1_Development_Plan_18M_Summary_v2"
             }
           }
         ]
@@ -55,7 +55,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#对于挖掘的结果做优化",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -79,12 +79,11 @@
               "title": "书签"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 385.5
+    "width": 469.5468559265137
   },
   "right": {
     "id": "dcfa4564ecfec502",
@@ -186,52 +185,54 @@
       "bases:新建数据库": false
     }
   },
-  "active": "f7b66402ff0bc3b5",
+  "active": "f712b5455b286610",
   "lastOpenFiles": [
-    "harness/claude code.md",
+    "ontology/Palantir研究/palantir_ticket_resolve_action_constraint_mapping.md",
+    "ontology/Palantir研究/palantir_ontology_15_modules_gap_analysis.md",
+    "ontology/Palantir研究/palantir_space_project_ontology_object_type.md",
+    "ontology/Palantir研究/palantir_project_for_ontology_management.md",
+    "ontology/Palantir研究/palantir_7_domains_81_systems_discovery_architecture.md",
+    "ontology/Palantir研究/palantir_7_domains_81_systems_discovery_architecture__CAGxrYOU.md",
+    "ontology/Palantir研究/palantir_quiver_deep_dive.md",
+    "ontology/Ontology_Platform_Phase1_Development_Plan_18M_Summary_v2.md",
+    "ontology/AIP_Logic_Studio_开发功能清单与开发计划.md",
+    "ontology/AIP_Logic_Studio_Complete_Product_Architecture_and_Function_Spec.md",
+    "ontology/~$AIP_Logic_Studio_开发计划_18人_52周.xlsx",
+    "ontology/AIP_Logic_Studio_开发计划_18人_52周.xlsx",
+    "ontology/~$AIP_Logic_Studio_开发计划_相对周期与人员.xlsx",
+    "ontology/AIP_Logic_Studio_开发计划_相对周期与人员.xlsx",
+    "ontology/AIP_Logic_Studio_开发功能清单与开发计划_删除第34章版.md",
+    "ontology/AIP_Logic_Studio_Complete_Spec_Optimized_Architecture.md",
+    "ontology/AI_Logic_Studio_Architecture_and_Development_Guide.md",
+    "ontology/AI_Logic_Studio_董事长汇报.md",
+    "提示词/合作开发.md",
+    "提示词/开发框架.md",
     "提示词/SAP AP挖掘.md",
-    "harness",
-    "ontology/数据分层/tidb_iceberg_data_tiering_design.md",
-    "提示词",
-    "ontology/数据分层/tidb_30_day_retention_60_day_query_design.md",
-    "ontology/会议内容/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/04_物的退_日落决策规则与自动下架.png",
-    "ontology/会议内容/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/05_物的退_当前运作过程.png",
-    "ontology/会议内容/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/06_物的退_自我进化与日落退出.png",
-    "ontology/会议内容/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/03_配置策略报价器_周边系统交互数据流.png",
-    "ontology/会议内容/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/08_物的上市_TTM分析_兼容性到配置器.png",
-    "ontology/会议内容/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/07_物的上市_兼容性E2E与AI自动生成配置手册.png",
-    "ontology/会议内容/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/09_物的上市感知_上架及时率与目录价感知.png",
-    "ontology/会议内容/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片",
-    "ontology/会议内容/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片.zip",
-    "ontology/会议内容/ipd场景的讨论-20260818",
-    "ontology/会议内容/未命名文件夹",
-    "ontology/会议内容",
-    "ontology/未命名文件夹",
-    "ontology/TiDB/tidb_write_hotspot_explained.md",
-    "ontology/TiDB/tidb_ontology_sharding_and_partitioning_design.md",
-    "ontology/TiDB/tidb_nebulagraph_large_scale_object_link_projection_solution.md",
-    "ontology/FreeMarker_JavaParser_Spring_JPA_Controller_动态代码生成框架_最佳实践.md",
-    "ontology/Palantir/palantir_ontology_graph_relational_database_solution.md",
-    "ontology/Palantir/palantir_quiver_deep_dive.md",
-    "ontology/动态生成_Spring_JPA到Controller_模块化Runtime开发框架_行业最佳实践_最终版.md",
-    "ontology/Ontology Runtime/ontology_runtime_postgresql_scalability_architecture.md",
-    "ontology/Ontology Runtime/tidb_only_ontology_reasoning_complete_solution.md",
-    "ontology/drp_architecture_detailed.md",
-    "ontology/国资监管/穿透式监管平台技术架构图.png",
-    "ontology/国资监管/中国穿透式监管需求分析.md",
-    "ontology/国资监管/基于Ontology方法论实现国资穿透式监管.md",
-    "ontology/palantir_foundry_modules_overview.md",
-    "ontology/国资监管/DRP平台建设-ljf-updated.md",
-    "ontology/国资监管/DRP平台建设.md",
-    "ontology/国资监管/2 (1).md",
-    "ontology/palantir_ontology_manager_detailed_features.md",
-    "ontology/tidb_iceberg_data_tiering_design.md",
-    "ontology/数据分层",
-    "ontology/TiDB/tikv_continuous_growth_tiflash_replication.md",
-    "ontology/TiDB/tiflash_impact_on_tikv_transactions.md",
-    "ontology/TiDB",
-    "ontology/Ontology Runtime/ontology_object_storage_design.md",
-    "ontology/基于Ontology方法论实现国资穿透式监管.md",
-    "未命名.canvas"
+    "ontology/ontology_management_platform_prd/ontology_platform_project_extensible_design.md",
+    "ontology/Ontology运行时/nebulagraph_ontology_runtime_architecture.md",
+    "ontology/Palantir研究/palantir_space_project_dataset_relationship.md",
+    "ontology/Palantir研究/palantir_object_type_action_type.md",
+    "ontology/Palantir研究/palantir_multi_domain_ontology_hr_procurement.md",
+    "ontology/Palantir研究/palantir_interface_action_type_constraints.md",
+    "ontology/Palantir研究/palantir_folder_nesting_and_hierarchy.md",
+    "ontology/Palantir研究/palantir_cross_space_ontology_import_permissions.md",
+    "ontology/palantir_folder_nesting_and_hierarchy.md",
+    "ontology/ontology_management_platform_prd",
+    "ontology/palantir_ontology_product_specs",
+    "ontology/palantir_ontology_docs",
+    "会议记录/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/01_目录价全生命周期管理_数据智能驱动.png",
+    "会议记录/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/03_配置策略报价器_周边系统交互数据流.png",
+    "会议记录/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/06_物的退_自我进化与日落退出.png",
+    "未命名.canvas",
+    "未命名.base",
+    "会议记录/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/10_物的智能感知_需要解决的问题.png",
+    "会议记录/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/09_物的上市感知_上架及时率与目录价感知.png",
+    "会议记录/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/08_物的上市_TTM分析_兼容性到配置器.png",
+    "会议记录/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/07_物的上市_兼容性E2E与AI自动生成配置手册.png",
+    "会议记录/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/05_物的退_当前运作过程.png",
+    "会议记录/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/04_物的退_日落决策规则与自动下架.png",
+    "会议记录/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片/02_iPricing系统_系统关联与数据交互.png",
+    "会议记录/ipd场景的讨论-20260818/物的全生命周期_去重重命名图片",
+    "会议记录/ipd场景的讨论-20260818"
   ]
 }

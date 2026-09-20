@@ -1,0 +1,20 @@
+# 文件清单
+
+- `00-Ontology元素地图与官方资料索引.md`
+- `01-Ontology.md`
+- `02-Object-Type.md`
+- `03-Property.md`
+- `04-Shared-Property.md`
+- `05-Link-Type.md`
+- `06-Action-Type.md`
+- `07-Action-Parameter.md`
+- `08-Action-Rules.md`
+- `09-Submission-Criteria.md`
+- `10-Action-Side-Effects.md`
+- `11-Interface.md`
+- `12-Object-Type-Group.md`
+- `13-Value-Type.md`
+- `14-Base-Type.md`
+- `15-Functions-on-Objects.md`
+- `16-Security-and-Permissions.md`
+- `17-Common-Metadata.md`
